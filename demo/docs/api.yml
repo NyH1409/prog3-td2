@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: Football API
+  description: PROG TD2
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /games:
+    get:
+      tags:
+        - Calendar
+      summary: Get all games
+      description: Get all games with details
+      operationId: getPlayAgaints
+      responses:
+        200:
+          description: List of games
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayAgainst'
+        500:
+          description: Internal server error
+  /teams:
+    get:
+      tags:
+        - Team
+      summary: Get all teams
+      description: Get all team with details
+      operationId: getTeams
+      responses:
+        200:
+          description: List of games
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+        500:
+          description: Internal server error
+  /teams/{tId}/players:
+    get:
+      tags:
+        - Team
+      summary: Get all players of a team
+      description: Get all players of a team with details
+      operationId: getPlayers
+      parameters:
+        - name: tId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+        500:
+          description: Internal server error
+components:
+  schemas:
+    PlayAgainst:
+      type: object
+      properties:
+        firstTeam:
+          type: string
+          example: "PSG"
+        secondTeam:
+          type: string
+          example: "Real Madrid FC"
+        date:
+          type: string
+          format: date-time
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          example: "PSG"
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+        sponsors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sponsor'
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          example: "Neymar JR"
+    Sponsor:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          example: "Qatar Airways"
