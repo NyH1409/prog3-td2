@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,8 +17,11 @@ public class PlayerController {
   private final PlayerRestMapper playerRestMapper;
 
   @GetMapping("/teams/{tId}/players")
-  public List<PlayerResponse> getTeams(@PathVariable("tId") int teamId) {
-    return playerService.getAllPlayers(teamId)
+  public List<PlayerResponse> getTeams(
+      @RequestParam("page") int page,
+      @RequestParam("pageSize") int pageSize,
+      @PathVariable("tId") int teamId) {
+    return playerService.getAllPlayers(page, pageSize, teamId)
         .stream().map(playerRestMapper::toRest)
         .toList();
   }
