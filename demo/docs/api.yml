@@ -72,14 +72,30 @@ components:
       type: object
       properties:
         firstTeam:
-          type: string
-          example: "PSG"
+          $ref: '#/components/schemas/Team'
         secondTeam:
-          type: string
-          example: "Real Madrid FC"
+          $ref: '#/components/schemas/Team'
         date:
           type: string
           format: date-time
+        scoreFirstTeam:
+          type: object
+          properties:
+            totalGoals:
+              type: integer
+            goals:
+              type: array
+              items:
+                $ref: '#/components/schemas/Goal'
+        scoreSecondTeam:
+          type: object
+          properties:
+            totalGoals:
+              type: integer
+            goals:
+              type: array
+              items:
+                $ref: '#/components/schemas/Goal'
     Team:
       type: object
       properties:
@@ -112,3 +128,14 @@ components:
         name:
           type: string
           example: "Qatar Airways"
+    Goal:
+      type: object
+      properties:
+        id:
+          type: string
+        goalTime:
+          type: integer
+        againstSide:
+          type: boolean
+        scorer:
+          $ref: '#/components/schemas/Player'
